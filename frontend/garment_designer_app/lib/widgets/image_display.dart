@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class ImageDisplay extends StatelessWidget {
   final String image;
@@ -6,6 +7,10 @@ class ImageDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Image.network('data:image/png;base64,$image', width: 200, height: 200,);
+    return Image.network(
+      'data:image/png;base64,$image',
+      width: 200,
+      height: 200,
+    );
   }
 }
