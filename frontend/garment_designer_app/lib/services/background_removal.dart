@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class BackgroundRemovalService {
@@ -18,10 +18,14 @@ class BackgroundRemovalService {
       );
 
       request.headers['Content-Type'] = 'multipart/form-data';
-      print("Sending API Request - Bytes: ${garmentImage.length}");
+      if (kDebugMode) {
+        print("Sending API Request - Bytes: ${garmentImage.length}");
+      }
       final response = await http.Response.fromStream(await request.send());
-      print("API Response - Status: ${response.statusCode}, Body: ${response.body}");
-
+      if (kDebugMode) {
+        print(
+          "API Response - Status: ${response.statusCode}, Body: ${response.body}");
+      }
 
       if (response.statusCode == 200) {
         final decodedData = json.decode(response.body);
@@ -32,7 +36,8 @@ class BackgroundRemovalService {
       } else {
         return {
           'success': false,
-          'error': "Error calling the backend. Please check the backend is running. Status Code: ${response.statusCode}, ${response.reasonPhrase}",
+          'error':
+              "Error calling the backend. Please check the backend is running. Status Code: ${response.statusCode}, ${response.reasonPhrase}",
         };
       }
     } catch (e) {
